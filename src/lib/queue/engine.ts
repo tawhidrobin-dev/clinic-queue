@@ -277,11 +277,12 @@ export async function advanceToNextPatient(sessionId: string): Promise<NextPatie
         .where(eq(appointments.id, est.id));
 
       if (row && row.patientPhone) {
+        const phone = row.patientPhone;
         alertsToTrigger.push(() =>
           checkAndDispatchTimeChangeAlert({
             appointmentId: est.id,
             serialNumber: row.appointment.serialNumber,
-            recipientPhone: row.patientPhone,
+            recipientPhone: phone,
             recipientName: row.patientName ?? 'Patient',
             chamberName: chamberName ?? 'Clinic Chamber',
             trackingToken: row.appointment.trackingToken,
