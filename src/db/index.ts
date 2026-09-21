@@ -11,10 +11,10 @@ import * as schema from './schema';
 // connections are recycled per transaction.
 // ============================================================
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/postgres';
 
-if (!connectionString) {
-  throw new Error('DATABASE_URL environment variable is not set');
+if (!process.env.DATABASE_URL && process.env.NODE_ENV === 'production' && typeof window === 'undefined' && process.env.NEXT_PHASE !== 'phase-production-build') {
+  console.warn('DATABASE_URL is not set. Database operations will fail at runtime.');
 }
 
 // Prevent multiple connections in development (Next.js HMR)
