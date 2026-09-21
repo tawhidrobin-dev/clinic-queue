@@ -2,7 +2,46 @@
 
 import React, { useState, useEffect } from 'react';
 import { calculateQueueEstimates, QueueItem } from '../../lib/queue-engine';
-import { Play, CheckCircle, UserX, Users } from 'lucide-react';
+
+// Clean inline SVGs so the project does not depend on lucide-react in production builds
+function PlayIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  );
+}
+
+function CheckCircleIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  );
+}
+
+function UserXIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="8.5" cy="7" r="4" />
+      <line x1="18" y1="8" x2="23" y2="13" />
+      <line x1="23" y1="8" x2="18" y2="13" />
+    </svg>
+  );
+}
+
+function UsersIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
 
 const initialQueue: QueueItem[] = [
   { id: '1', tokenNumber: 101, patientName: 'Rahim Uddin', visitType: 'NEW', status: 'IN_CONSULTATION' },
@@ -43,7 +82,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex gap-4">
             <div className="bg-slate-800 px-4 py-2 rounded-lg border border-slate-700 flex items-center gap-2">
-              <Users className="w-4 h-4 text-emerald-400" />
+              <UsersIcon className="w-4 h-4 text-emerald-400" />
               <span className="text-sm">Waiting: <strong>{waitingCount}</strong></span>
             </div>
           </div>
@@ -66,7 +105,7 @@ export default function DashboardPage() {
                   onClick={() => updateStatus(activePatient.id, 'COMPLETED')}
                   className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition"
                 >
-                  <CheckCircle className="w-4 h-4" /> Complete Consultation
+                  <CheckCircleIcon className="w-4 h-4" /> Complete Consultation
                 </button>
               </div>
             </div>
@@ -114,7 +153,7 @@ export default function DashboardPage() {
                         className="p-1.5 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white rounded transition"
                         title="Call Next"
                       >
-                        <Play className="w-4 h-4" />
+                        <PlayIcon className="w-4 h-4" />
                       </button>
                     )}
                     {item.status !== 'COMPLETED' && (
@@ -123,7 +162,7 @@ export default function DashboardPage() {
                         className="p-1.5 bg-rose-500/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded transition"
                         title="Mark No-Show"
                       >
-                        <UserX className="w-4 h-4" />
+                        <UserXIcon className="w-4 h-4" />
                       </button>
                     )}
                   </td>
